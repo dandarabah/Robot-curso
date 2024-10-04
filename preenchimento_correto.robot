@@ -1,4 +1,5 @@
 *** Settings ***
+Library          recursion_lib.py
 Library          SeleniumLibrary
 Library          BuiltIn
 Library          FakerLibrary         locale=pt_BR
@@ -22,6 +23,11 @@ ${CAMPO_CARD}      id:form-botao
 ...       //option[contains(.,'Inovação')]
 
 *** Test Cases ***
+Set Recursion Limit
+    ${limit}=    Set Recursion Limit    2000
+    Log    New recursion limit is ${limit}
+
+
 Verificar se ao preencher corretamente o formulário os dados são inseridos corretamente na lista e se um novo card é criado no time esperado
      Dado que eu preencha os campos do formulário
      E clique no botão criar card
@@ -38,7 +44,6 @@ Verificar se é possível criar um card para cada time se preenchermos os campos
 
 *** Keywords ***
 Dado que eu preencha os campos do formulário
-  Dado que eu preencha os campos do formulário
     ${Nome}             FakerLibrary.First Name
     Input Text          ${CAMPO_NOME}         ${Nome}
     ${Cargo}            FakerLibrary.Job
@@ -47,7 +52,8 @@ Dado que eu preencha os campos do formulário
     Input Text          ${CAMPO_IMAGEM}       ${Imagem}
     Click Element       ${CAMPO_TIME}
     Click Element       ${selecionar_times}[0]
-    
+    Sleep    30s
+
 E clique no botão criar card    
     Click Element    ${CAMPO_CARD}
 
@@ -58,11 +64,11 @@ Então identificar 3 cards no time esperado
         Dado que eu preencha os campos do formulário
         E clique no botão Criar Card
     END
-    Sleep    10s
+    Sleep    30s
 Então criar e identificar 1 card em cada time disponível
       FOR    ${indice}    ${time}    IN ENUMERATE    @{selecionar_times}
         Dado que eu preencha os campos do formulário
         Click Element            ${time}
                 E clique no botão criar card
     END
-    Sleep    10s
+    Sleep    30s
