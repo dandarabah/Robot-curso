@@ -48,7 +48,7 @@ Dado que eu preencha os campos do formulário
     Input Text          ${CAMPO_NOME}         ${Nome}
     ${Cargo}            FakerLibrary.Job
     Input Text          ${CAMPO_CARGO}        ${Cargo}
-    ${Imagem}           FakerLibrary.Image Url
+    ${Imagem}           FakerLibrary.Image Url  width=100  height=100
     Input Text          ${CAMPO_IMAGEM}       ${Imagem}
     Click Element       ${CAMPO_TIME}
     Click Element       ${selecionar_times}[0]
